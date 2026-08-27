@@ -1,6 +1,17 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/layout/AppShell";
+import { RecordFilters } from "@/components/records/RecordFilters";
+import { RecordsList } from "@/components/records/RecordsList";
+import {
+  emptyTransactionFilters,
+  filterTransactions,
+  formatHUF,
+  sumByType,
+  type TransactionFilters,
+} from "@/lib/finance/selectors";
+import { useFinance } from "@/lib/finance/useFinance";
 
 export const Route = createFileRoute("/records")({
   head: () => ({
@@ -15,9 +26,24 @@ export const Route = createFileRoute("/records")({
 });
 
 function RecordsPage() {
+  const state = useFinance();
+  const [filters, setFilters] = useState<TransactionFilters>(emptyTransactionFilters);
+
+  const visibleTransactions = filterTransactions(state, filters);
+  const totals = sumByType(visibleTransactions);
+
   return (
     <AppShell title="Records">
-      <p className="text-sm text-muted-foreground">Records list coming next.</p>
+      <div className="space-y-4">
+        <RecordFilters state={state} filters={filters} onChange={setFilters} />
+
+        <p className="px-1 text-xs text-muted-foreground" role="status">
+          {visibleTransactions.length} record{visibleTransactions.length === 1 ? "" : "s"} · income{" "}
+          {formatHUF(totals.income)} · expense {formatHUF(totals.expense)}
+        </p>
+
+        <RecordsList state={state} transactions={visibleTransactions} />
+      </div>
     </AppShell>
   );
 }
