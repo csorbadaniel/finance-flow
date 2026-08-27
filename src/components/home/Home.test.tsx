@@ -1,10 +1,20 @@
-import { describe, expect, it, beforeEach } from "vitest";
+import { describe, expect, it, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 import { MonthSummaryCard } from "./MonthSummaryCard";
 import { RecentTransactions } from "./RecentTransactions";
 import { financeStore } from "@/lib/finance/store";
 import { formatHUF, getMonthSummary } from "@/lib/finance/selectors";
+
+// Link needs a router context that these unit tests don't provide.
+vi.mock("@tanstack/react-router", () => ({
+  Link: ({ children }: { children: React.ReactNode }) => <a href="/records">{children}</a>,
+}));
+
+/** Normalizes non-breaking spaces used by the hu-HU number format. */
+function normalize(value: string): string {
+  return value.replace(/\s/g, " ");
+}
 
 describe("Home widgets", () => {
   beforeEach(() => {
@@ -17,8 +27,8 @@ describe("Home widgets", () => {
 
     render(<MonthSummaryCard transactions={state.transactions} />);
 
-    expect(screen.getByLabelText("Balance this month")).toHaveTextContent(
-      formatHUF(summary.balance),
+    expect(normalize(screen.getByLabelText("Balance this month").textContent ?? "")).toBe(
+      normalize(formatHUF(summary.balance)),
     );
     expect(screen.getByText("Income")).toBeInTheDocument();
     expect(screen.getByText("Expense")).toBeInTheDocument();
