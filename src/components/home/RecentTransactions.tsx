@@ -1,20 +1,12 @@
 import { Link } from "@tanstack/react-router";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatHUF, getCategoryPath } from "@/lib/finance/selectors";
+import { formatDisplayDate, formatHUF, getCategoryPath } from "@/lib/finance/selectors";
 import type { FinanceState } from "@/lib/finance/types";
 
 interface RecentTransactionsProps {
   state: FinanceState;
   limit?: number;
-}
-
-/** Formats an ISO date as YYYY/MM/DD. */
-function formatDate(isoDate: string): string {
-  const d = new Date(isoDate);
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}/${month}/${day}`;
 }
 
 export function RecentTransactions({ state, limit = 5 }: RecentTransactionsProps) {
@@ -45,7 +37,7 @@ export function RecentTransactions({ state, limit = 5 }: RecentTransactionsProps
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{leaf?.name ?? "Uncategorized"}</p>
                     <p className="truncate text-xs text-muted-foreground">
-                      {formatDate(txn.date)}
+                      {formatDisplayDate(txn.date)}
                       {txn.note ? ` · ${txn.note}` : ""}
                     </p>
                   </div>
