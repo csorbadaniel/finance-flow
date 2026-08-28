@@ -61,4 +61,17 @@ describe("Records", () => {
       expect(screen.getByText(new RegExp(`#${txn.recordNumber}`))).toBeInTheDocument();
     }
   });
+
+  it("calls onSelectTransaction when a record row is pressed", async () => {
+    const user = userEvent.setup();
+    const state = financeStore.getState();
+    const transactions = filterTransactions(state, emptyTransactionFilters).slice(0, 3);
+    const onSelect = vi.fn();
+
+    render(<RecordsList state={state} transactions={transactions} onSelectTransaction={onSelect} />);
+
+    await user.click(screen.getByRole("button", { name: new RegExp(`#${transactions[1].recordNumber}`) }));
+
+    expect(onSelect).toHaveBeenCalledWith(transactions[1]);
+  });
 });
