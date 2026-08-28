@@ -1,5 +1,6 @@
-import { describe, expect, it, beforeEach } from "vitest";
+import { describe, expect, it, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { RecordsList } from "./RecordsList";
 import { financeStore } from "@/lib/finance/store";
@@ -59,5 +60,18 @@ describe("Records", () => {
     for (const txn of transactions) {
       expect(screen.getByText(new RegExp(`#${txn.recordNumber}`))).toBeInTheDocument();
     }
+  });
+
+  it("calls onSelectTransaction when a record row is pressed", async () => {
+    const user = userEvent.setup();
+    const state = financeStore.getState();
+    const transactions = filterTransactions(state, emptyTransactionFilters).slice(0, 3);
+    const onSelect = vi.fn();
+
+    render(<RecordsList state={state} transactions={transactions} onSelectTransaction={onSelect} />);
+
+    await user.click(screen.getByRole("button", { name: new RegExp(`#${transactions[1].recordNumber}`) }));
+
+    expect(onSelect).toHaveBeenCalledWith(transactions[1]);
   });
 });
