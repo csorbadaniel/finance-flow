@@ -11,9 +11,10 @@ import type { FinanceState, Transaction } from "@/lib/finance/types";
 interface RecordsListProps {
   state: FinanceState;
   transactions: Transaction[];
+  onSelectTransaction?: (transaction: Transaction) => void;
 }
 
-export function RecordsList({ state, transactions }: RecordsListProps) {
+export function RecordsList({ state, transactions, onSelectTransaction }: RecordsListProps) {
   if (transactions.length === 0) {
     return (
       <p className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
@@ -43,28 +44,36 @@ export function RecordsList({ state, transactions }: RecordsListProps) {
               {group.items.map((txn) => {
                 const path = getCategoryPath(state, txn.categoryId);
                 const purse = state.purses.find((p) => p.id === txn.purseId);
+                const categoryLabel = path.map((c) => c.name).join(" › ") || "Uncategorized";
                 return (
-                  <li key={txn.id} className="flex items-center justify-between gap-3 px-4 py-3">
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">
-                        {path.map((c) => c.name).join(" › ") || "Uncategorized"}
-                      </p>
-                      <p className="truncate text-xs text-muted-foreground">
-                        #{txn.recordNumber} · {formatDisplayDate(txn.date)}
-                        {purse ? ` · ${purse.name}` : ""}
-                        {txn.note ? ` · ${txn.note}` : ""}
-                      </p>
-                    </div>
-                    <span
-                      className={
-                        txn.type === "income"
-                          ? "shrink-0 text-sm font-semibold tabular-nums text-primary"
-                          : "shrink-0 text-sm font-semibold tabular-nums text-foreground"
-                      }
+                  <li key={txn.id}>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      aria-label={`Edit record #${txn.recordNumber}, ${categoryLabel}, ${
+                        txn.type === "income" ? "income" : "expense"
+                      } of ${formatHUF(txn.amount)}`}
+                      onClick={() => onSelectTransaction?.(txn)}
                     >
-                      {txn.type === "income" ? "+" : "−"}
-                      {formatHUF(txn.amount)}
-                    </span>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium">{categoryLabel}</p>
+                        <p className="truncate text-xs text-muted-foreground">
+                          #{txn.recordNumber} · {formatDisplayDate(txn.date)}
+                          {purse ? ` · ${purse.name}` : ""}
+                          {txn.note ? ` · ${txn.note}` : ""}
+                        </p>
+                      </div>
+                      <span
+                        className={
+                          txn.type === "income"
+                            ? "shrink-0 text-sm font-semibold tabular-nums text-primary"
+                            : "shrink-0 text-sm font-semibold tabular-nums text-foreground"
+                        }
+                      >
+                        {txn.type === "income" ? "+" : "−"}
+                        {formatHUF(txn.amount)}
+                      </span>
+                    </button>
                   </li>
                 );
               })}
