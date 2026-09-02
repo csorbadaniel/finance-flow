@@ -84,6 +84,8 @@ export function QuickAddDialog() {
       open={isOpen}
       onOpenChange={(next) => {
         setIsOpen(next);
+        // Always preselect the current default purse when opening.
+        if (next) setPurseId(getDefaultPurseId(state) ?? "");
         if (!next) resetForm();
       }}
     >
