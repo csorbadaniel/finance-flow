@@ -1,3 +1,5 @@
+import type { CurrencyCode } from "./currency";
+
 export type TransactionType = "income" | "expense";
 
 export interface Category {
@@ -35,4 +37,6 @@ export interface FinanceState {
   categories: Category[];
   purses: Purse[];
   onboardingSeen: boolean;
+  /** Display currency preference; amounts are never converted. */
+  currency: CurrencyCode;
 }
