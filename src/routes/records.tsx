@@ -8,7 +8,6 @@ import { RecordsList } from "@/components/records/RecordsList";
 import {
   emptyTransactionFilters,
   filterTransactions,
-  formatHUF,
   sumByType,
   type TransactionFilters,
 } from "@/lib/finance/selectors";
@@ -48,7 +47,7 @@ function RecordsPage() {
 
         <p className="px-1 text-xs text-muted-foreground" role="status">
           {visibleTransactions.length} record{visibleTransactions.length === 1 ? "" : "s"} · income{" "}
-          {formatHUF(totals.income)} · expense {formatHUF(totals.expense)}
+          {money(totals.income)} · expense {money(totals.expense)}
         </p>
 
         <RecordsList

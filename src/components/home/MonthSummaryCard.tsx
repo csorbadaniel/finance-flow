@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { formatHUF, getMonthSummary } from "@/lib/finance/selectors";
+import { getMonthSummary } from "@/lib/finance/selectors";
+import { useMoneyFormatter } from "@/lib/finance/useFinance";
 import type { Transaction } from "@/lib/finance/types";
 
 interface MonthSummaryCardProps {
@@ -7,6 +8,7 @@ interface MonthSummaryCardProps {
 }
 
 export function MonthSummaryCard({ transactions }: MonthSummaryCardProps) {
+  const money = useMoneyFormatter();
   const summary = getMonthSummary(transactions);
 
   return (
@@ -22,17 +24,17 @@ export function MonthSummaryCard({ transactions }: MonthSummaryCardProps) {
             }
             aria-label="Balance this month"
           >
-            {formatHUF(summary.balance)}
+            {money(summary.balance)}
           </p>
         </div>
         <dl className="grid grid-cols-2 gap-3">
           <div className="rounded-md bg-muted p-3">
             <dt className="text-xs text-muted-foreground">Income</dt>
-            <dd className="text-lg font-medium tabular-nums">{formatHUF(summary.income)}</dd>
+            <dd className="text-lg font-medium tabular-nums">{money(summary.income)}</dd>
           </div>
           <div className="rounded-md bg-muted p-3">
             <dt className="text-xs text-muted-foreground">Expense</dt>
-            <dd className="text-lg font-medium tabular-nums">{formatHUF(summary.expense)}</dd>
+            <dd className="text-lg font-medium tabular-nums">{money(summary.expense)}</dd>
           </div>
         </dl>
       </CardContent>

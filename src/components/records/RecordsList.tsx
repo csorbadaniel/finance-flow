@@ -1,12 +1,12 @@
 import {
   formatDisplayDate,
-  formatHUF,
   formatMonthKey,
   getCategoryPath,
   groupByMonth,
   sumByType,
 } from "@/lib/finance/selectors";
 import type { FinanceState, Transaction } from "@/lib/finance/types";
+import { useMoneyFormatter } from "@/lib/finance/useFinance";
 
 interface RecordsListProps {
   state: FinanceState;
@@ -15,6 +15,7 @@ interface RecordsListProps {
 }
 
 export function RecordsList({ state, transactions, onSelectTransaction }: RecordsListProps) {
+  const money = useMoneyFormatter();
   if (transactions.length === 0) {
     return (
       <p className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
@@ -36,7 +37,7 @@ export function RecordsList({ state, transactions, onSelectTransaction }: Record
                 {formatMonthKey(group.monthKey)}
               </h2>
               <span className="text-xs tabular-nums text-muted-foreground">
-                {formatHUF(totals.balance)}
+                {money(totals.balance)}
               </span>
             </header>
 
@@ -52,7 +53,7 @@ export function RecordsList({ state, transactions, onSelectTransaction }: Record
                       className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       aria-label={`Edit record #${txn.recordNumber}, ${categoryLabel}, ${
                         txn.type === "income" ? "income" : "expense"
-                      } of ${formatHUF(txn.amount)}`}
+                      } of ${money(txn.amount)}`}
                       onClick={() => onSelectTransaction?.(txn)}
                     >
                       <div className="min-w-0">
@@ -71,7 +72,7 @@ export function RecordsList({ state, transactions, onSelectTransaction }: Record
                         }
                       >
                         {txn.type === "income" ? "+" : "−"}
-                        {formatHUF(txn.amount)}
+                        {money(txn.amount)}
                       </span>
                     </button>
                   </li>

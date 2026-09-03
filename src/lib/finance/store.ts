@@ -6,6 +6,7 @@
  * - All mutations are synchronous and validated; throws on invariant violations.
  */
 import { initialFinanceState } from "./mockData";
+import { DEFAULT_CURRENCY, type CurrencyCode } from "./currency";
 import type { Category, FinanceState, Purse, Transaction, TransactionType } from "./types";
 
 const STORAGE_KEY = "financeflow.state.v1";
@@ -26,7 +27,7 @@ function loadState(): FinanceState {
     if (!parsed || !Array.isArray(parsed.transactions) || !Array.isArray(parsed.categories) || !Array.isArray(parsed.purses)) {
       return initialFinanceState;
     }
-    return parsed;
+    return { ...parsed, currency: parsed.currency ?? DEFAULT_CURRENCY };
   } catch {
     return initialFinanceState;
   }
@@ -305,6 +306,13 @@ class FinanceStore {
   setOnboardingSeen(seen: boolean): void {
     this.ensureHydrated();
     this.commit({ ...this.state, onboardingSeen: seen });
+  }
+
+  // ---- Preferences ------------------------------------------------------
+
+  setCurrency(currency: CurrencyCode): void {
+    this.ensureHydrated();
+    this.commit({ ...this.state, currency });
   }
 
   // ---- Test / reset -----------------------------------------------------

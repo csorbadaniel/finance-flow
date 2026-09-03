@@ -2,9 +2,9 @@ import { Pencil, Star } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import { formatHUF } from "@/lib/finance/selectors";
 import { financeStore } from "@/lib/finance/store";
 import type { FinanceState, Purse } from "@/lib/finance/types";
+import { useMoneyFormatter } from "@/lib/finance/useFinance";
 
 interface PurseListProps {
   state: FinanceState;
@@ -19,6 +19,7 @@ function getPurseBalance(state: FinanceState, purseId: string): number {
 }
 
 export function PurseList({ state, onEdit }: PurseListProps) {
+  const money = useMoneyFormatter();
   const handleSetDefault = (purse: Purse) => {
     if (purse.isDefault) return;
     financeStore.setDefaultPurse(purse.id);
@@ -65,7 +66,7 @@ export function PurseList({ state, onEdit }: PurseListProps) {
               </p>
               <p className="text-xs text-muted-foreground">
                 {recordCount} record{recordCount === 1 ? "" : "s"} ·{" "}
-                {formatHUF(getPurseBalance(state, purse.id))}
+                {money(getPurseBalance(state, purse.id))}
               </p>
             </div>
 

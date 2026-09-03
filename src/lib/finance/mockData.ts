@@ -1,3 +1,4 @@
+import { DEFAULT_CURRENCY } from "./currency";
 import type { Category, Purse, Transaction, FinanceState } from "./types";
 
 // ---- Categories ---------------------------------------------------------
@@ -130,4 +131,5 @@ export const initialFinanceState: FinanceState = {
   categories: mockCategories,
   purses: mockPurses,
   onboardingSeen: false,
+  currency: DEFAULT_CURRENCY,
 };

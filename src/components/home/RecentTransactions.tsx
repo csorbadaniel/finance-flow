@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatDisplayDate, formatHUF, getCategoryPath } from "@/lib/finance/selectors";
+import { formatDisplayDate, getCategoryPath } from "@/lib/finance/selectors";
+import { useMoneyFormatter } from "@/lib/finance/useFinance";
 import type { FinanceState } from "@/lib/finance/types";
 
 interface RecentTransactionsProps {
@@ -10,6 +11,7 @@ interface RecentTransactionsProps {
 }
 
 export function RecentTransactions({ state, limit = 5 }: RecentTransactionsProps) {
+  const money = useMoneyFormatter();
   const recent = [...state.transactions]
     .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
     .slice(0, limit);
@@ -49,7 +51,7 @@ export function RecentTransactions({ state, limit = 5 }: RecentTransactionsProps
                     }
                   >
                     {txn.type === "income" ? "+" : "−"}
-                    {formatHUF(txn.amount)}
+                    {money(txn.amount)}
                   </span>
                 </li>
               );

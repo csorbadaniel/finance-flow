@@ -22,7 +22,7 @@ import {
   filterByRange,
   type ChartConfig,
 } from "@/lib/finance/charts";
-import { formatHUF } from "@/lib/finance/selectors";
+import { useMoneyFormatter } from "@/lib/finance/useFinance";
 import type { FinanceState } from "@/lib/finance/types";
 
 interface ChartResultProps {
@@ -68,7 +68,7 @@ export function ChartResult({ state, config }: ChartResultProps) {
             <span className="text-muted-foreground">
               {isCategoryView ? "Total" : "Net balance"}:{" "}
             </span>
-            <span className="font-semibold">{formatHUF(total)}</span>
+            <span className="font-semibold">{money(total)}</span>
           </p>
 
           <div className="h-72 w-full">
@@ -80,23 +80,23 @@ export function ChartResult({ state, config }: ChartResultProps) {
                       <Cell key={slice.categoryId} fill={sliceColors[index % sliceColors.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(value: number) => formatHUF(value)} />
+                  <Tooltip formatter={(value: number) => money(value)} />
                   <Legend />
                 </PieChart>
               ) : config.format === "bar" && isCategoryView ? (
                 <BarChart data={slices}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="label" tickLine={false} />
-                  <YAxis width={70} tickFormatter={(value: number) => formatHUF(value)} />
-                  <Tooltip formatter={(value: number) => formatHUF(value)} />
+                  <YAxis width={70} tickFormatter={(value: number) => money(value)} />
+                  <Tooltip formatter={(value: number) => money(value)} />
                   <Bar dataKey="value" fill="var(--chart-1)" radius={4} />
                 </BarChart>
               ) : config.format === "bar" ? (
                 <BarChart data={points}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="monthKey" tickLine={false} />
-                  <YAxis width={70} tickFormatter={(value: number) => formatHUF(value)} />
-                  <Tooltip formatter={(value: number) => formatHUF(value)} />
+                  <YAxis width={70} tickFormatter={(value: number) => money(value)} />
+                  <Tooltip formatter={(value: number) => money(value)} />
                   <Legend />
                   <Bar dataKey="income" name="Income" fill="var(--chart-2)" radius={4} />
                   <Bar dataKey="expense" name="Expense" fill="var(--chart-4)" radius={4} />
@@ -105,8 +105,8 @@ export function ChartResult({ state, config }: ChartResultProps) {
                 <LineChart data={points}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="monthKey" tickLine={false} />
-                  <YAxis width={70} tickFormatter={(value: number) => formatHUF(value)} />
-                  <Tooltip formatter={(value: number) => formatHUF(value)} />
+                  <YAxis width={70} tickFormatter={(value: number) => money(value)} />
+                  <Tooltip formatter={(value: number) => money(value)} />
                   <Legend />
                   <Line type="monotone" dataKey="balance" name="Balance" stroke="var(--chart-1)" strokeWidth={2} />
                 </LineChart>
@@ -120,7 +120,7 @@ export function ChartResult({ state, config }: ChartResultProps) {
                 <li key={slice.categoryId} className="flex justify-between gap-2">
                   <span>{slice.label}</span>
                   <span className="font-medium">
-                    {formatHUF(slice.value)} ({Math.round(slice.share * 100)}%)
+                    {money(slice.value)} ({Math.round(slice.share * 100)}%)
                   </span>
                 </li>
               ))}
