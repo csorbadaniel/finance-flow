@@ -31,11 +31,11 @@ interface ChartResultProps {
 }
 
 const sliceColors = [
-  "hsl(var(--chart-1))",
-  "hsl(var(--chart-2))",
-  "hsl(var(--chart-3))",
-  "hsl(var(--chart-4))",
-  "hsl(var(--chart-5))",
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
+  "var(--chart-5)",
 ];
 
 export function ChartResult({ state, config }: ChartResultProps) {
@@ -89,7 +89,7 @@ export function ChartResult({ state, config }: ChartResultProps) {
                   <XAxis dataKey="label" tickLine={false} />
                   <YAxis width={70} tickFormatter={(value: number) => formatHUF(value)} />
                   <Tooltip formatter={(value: number) => formatHUF(value)} />
-                  <Bar dataKey="value" fill="hsl(var(--chart-1))" radius={4} />
+                  <Bar dataKey="value" fill="var(--chart-1)" radius={4} />
                 </BarChart>
               ) : config.format === "bar" ? (
                 <BarChart data={points}>
@@ -98,8 +98,8 @@ export function ChartResult({ state, config }: ChartResultProps) {
                   <YAxis width={70} tickFormatter={(value: number) => formatHUF(value)} />
                   <Tooltip formatter={(value: number) => formatHUF(value)} />
                   <Legend />
-                  <Bar dataKey="income" name="Income" fill="hsl(var(--chart-2))" radius={4} />
-                  <Bar dataKey="expense" name="Expense" fill="hsl(var(--chart-4))" radius={4} />
+                  <Bar dataKey="income" name="Income" fill="var(--chart-2)" radius={4} />
+                  <Bar dataKey="expense" name="Expense" fill="var(--chart-4)" radius={4} />
                 </BarChart>
               ) : (
                 <LineChart data={points}>
@@ -108,7 +108,7 @@ export function ChartResult({ state, config }: ChartResultProps) {
                   <YAxis width={70} tickFormatter={(value: number) => formatHUF(value)} />
                   <Tooltip formatter={(value: number) => formatHUF(value)} />
                   <Legend />
-                  <Line type="monotone" dataKey="balance" name="Balance" stroke="hsl(var(--chart-1))" strokeWidth={2} />
+                  <Line type="monotone" dataKey="balance" name="Balance" stroke="var(--chart-1)" strokeWidth={2} />
                 </LineChart>
               )}
             </ResponsiveContainer>
