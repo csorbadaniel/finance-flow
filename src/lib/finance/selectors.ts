@@ -1,8 +1,6 @@
 import type { Category, FinanceState, Transaction, TransactionType } from "./types";
 
-export function formatHUF(amount: number): string {
-  return `${new Intl.NumberFormat("hu-HU").format(Math.round(amount))} Ft`;
-}
+export { formatMoney } from "./currency";
 
 export function getCategoryById(state: FinanceState, id: string): Category | undefined {
   return state.categories.find((c) => c.id === id);

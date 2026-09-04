@@ -11,7 +11,7 @@ import {
   sumByType,
   type TransactionFilters,
 } from "@/lib/finance/selectors";
-import { useFinance } from "@/lib/finance/useFinance";
+import { useFinance, useMoneyFormatter } from "@/lib/finance/useFinance";
 import type { Transaction } from "@/lib/finance/types";
 
 export const Route = createFileRoute("/records")({
@@ -28,6 +28,7 @@ export const Route = createFileRoute("/records")({
 
 function RecordsPage() {
   const state = useFinance();
+  const money = useMoneyFormatter();
   const [filters, setFilters] = useState<TransactionFilters>(emptyTransactionFilters);
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
 
