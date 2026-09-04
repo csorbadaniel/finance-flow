@@ -34,6 +34,7 @@ function todayIso(): string {
 }
 
 export function QuickAddDialog() {
+  const currencySymbol = useCurrencySymbol();
   const state = useFinance();
   const [isOpen, setIsOpen] = useState(false);
   const [type, setType] = useState<TransactionType>("expense");

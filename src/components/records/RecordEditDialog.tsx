@@ -32,6 +32,7 @@ interface RecordEditDialogProps {
 }
 
 export function RecordEditDialog({ state, transaction, onClose }: RecordEditDialogProps) {
+  const currencySymbol = useCurrencySymbol();
   const [type, setType] = useState<TransactionType>("expense");
   const [amount, setAmount] = useState("");
   const [categoryId, setCategoryId] = useState("");
