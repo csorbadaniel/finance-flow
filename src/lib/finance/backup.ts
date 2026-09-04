@@ -242,7 +242,7 @@ export const exampleBackup: BackupData = {
       amount: 450000,
       categoryId: "cat-salary",
       purseId: "purse-card",
-      date: "2026/09/01".replaceAll("/", "-"),
+      date: "2026-09-01",
       note: "Monthly salary",
       createdAt: "2026-09-01T08:00:00.000Z",
     },
