@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { getCategoryPath } from "@/lib/finance/selectors";
+import { useCurrencySymbol } from "@/lib/finance/useFinance";
 import { financeStore } from "@/lib/finance/store";
 import type { FinanceState, Transaction, TransactionType } from "@/lib/finance/types";
 
@@ -31,6 +32,7 @@ interface RecordEditDialogProps {
 }
 
 export function RecordEditDialog({ state, transaction, onClose }: RecordEditDialogProps) {
+  const currencySymbol = useCurrencySymbol();
   const [type, setType] = useState<TransactionType>("expense");
   const [amount, setAmount] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -116,7 +118,7 @@ export function RecordEditDialog({ state, transaction, onClose }: RecordEditDial
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="record-edit-amount">Amount (Ft)</Label>
+            <Label htmlFor="record-edit-amount">Amount ({currencySymbol})</Label>
             <Input
               id="record-edit-amount"
               inputMode="decimal"

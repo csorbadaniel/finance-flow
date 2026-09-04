@@ -39,6 +39,7 @@ const sliceColors = [
 ];
 
 export function ChartResult({ state, config }: ChartResultProps) {
+  const money = useMoneyFormatter();
   const inRange = filterByRange(state.transactions, config.range);
   const isCategoryView = config.view !== "balance";
   const slices = isCategoryView

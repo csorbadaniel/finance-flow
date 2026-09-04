@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { financeStore } from "./store";
-import { getMonthSummary, getCategoryPath, getCategorySubtreeIds, formatHUF } from "./selectors";
+import { formatMoney } from "./currency";
+import { getMonthSummary, getCategoryPath, getCategorySubtreeIds } from "./selectors";
 
 beforeEach(() => {
   financeStore.resetToMock();
@@ -120,6 +121,6 @@ describe("selectors", () => {
   });
 
   it("formats HUF with thousands separator", () => {
-    expect(formatHUF(180000)).toMatch(/180.?000 Ft/);
+    expect(formatMoney(180000)).toMatch(/180.?000 Ft/);
   });
 });

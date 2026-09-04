@@ -4,7 +4,8 @@ import { render, screen } from "@testing-library/react";
 import { MonthSummaryCard } from "./MonthSummaryCard";
 import { RecentTransactions } from "./RecentTransactions";
 import { financeStore } from "@/lib/finance/store";
-import { formatHUF, getMonthSummary } from "@/lib/finance/selectors";
+import { getMonthSummary } from "@/lib/finance/selectors";
+import { formatMoney } from "@/lib/finance/currency";
 
 // Link needs a router context that these unit tests don't provide.
 vi.mock("@tanstack/react-router", () => ({
@@ -28,7 +29,7 @@ describe("Home widgets", () => {
     render(<MonthSummaryCard transactions={state.transactions} />);
 
     expect(normalize(screen.getByLabelText("Balance this month").textContent ?? "")).toBe(
-      normalize(formatHUF(summary.balance)),
+      normalize(formatMoney(summary.balance)),
     );
     expect(screen.getByText("Income")).toBeInTheDocument();
     expect(screen.getByText("Expense")).toBeInTheDocument();
