@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { financeStore, useFinance } from "@/lib/finance/useFinance";
+import { financeStore, useFinance, useCurrencySymbol } from "@/lib/finance/useFinance";
 import { getCategoryPath, getDefaultPurseId } from "@/lib/finance/selectors";
 import type { TransactionType } from "@/lib/finance/types";
 
@@ -116,7 +116,7 @@ export function QuickAddDialog() {
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="quick-add-amount">Amount (Ft)</Label>
+            <Label htmlFor="quick-add-amount">Amount ({currencySymbol})</Label>
             <Input
               id="quick-add-amount"
               inputMode="decimal"
