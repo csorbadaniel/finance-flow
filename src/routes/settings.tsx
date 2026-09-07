@@ -33,6 +33,15 @@ function SettingsPage() {
 
         <Card>
           <CardHeader className="pb-2">
+            <CardTitle className="text-base">Data</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DataTransfer />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="pb-2">
             <CardTitle className="text-base">Getting started</CardTitle>
           </CardHeader>
           <CardContent>
