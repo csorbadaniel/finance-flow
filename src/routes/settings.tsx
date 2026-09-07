@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/layout/AppShell";
 import { CurrencyPreference } from "@/components/settings/CurrencyPreference";
+import { DataTransfer } from "@/components/settings/DataTransfer";
 import { OnboardingRestart } from "@/components/settings/OnboardingRestart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { APP_BUILD_DATE, APP_NAME, APP_VERSION } from "@/lib/appInfo";
