@@ -16,6 +16,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import { AccountSection } from "@/components/auth/AccountSection";
 
 export interface NavItem {
   label: string;
@@ -64,6 +65,7 @@ export function NavDrawer({ isOpen, onOpenChange }: NavDrawerProps) {
             ))}
           </ul>
         </nav>
+        <AccountSection onNavigate={() => onOpenChange(false)} />
       </SheetContent>
     </Sheet>
   );
