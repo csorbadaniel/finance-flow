@@ -315,6 +315,26 @@ class FinanceStore {
     this.commit({ ...this.state, currency });
   }
 
+  // ---- Import / export --------------------------------------------------
+
+  /** Replaces categories, purses and transactions with imported data. */
+  replaceData(data: {
+    categories: Category[];
+    purses: Purse[];
+    transactions: Transaction[];
+    currency?: CurrencyCode;
+  }): void {
+    this.ensureHydrated();
+    if (data.purses.length === 0) throw new Error("At least one purse is required");
+    this.commit({
+      ...this.state,
+      categories: data.categories,
+      purses: data.purses,
+      transactions: data.transactions,
+      currency: data.currency ?? this.state.currency,
+    });
+  }
+
   // ---- Test / reset -----------------------------------------------------
 
   /** TEST ONLY: reset to mock initial state. */
