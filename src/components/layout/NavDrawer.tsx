@@ -64,6 +64,7 @@ export function NavDrawer({ isOpen, onOpenChange }: NavDrawerProps) {
             ))}
           </ul>
         </nav>
+        <AccountSection onNavigate={() => onOpenChange(false)} />
       </SheetContent>
     </Sheet>
   );
