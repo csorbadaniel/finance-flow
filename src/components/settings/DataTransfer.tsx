@@ -21,7 +21,8 @@ function downloadFile(fileName: string, content: string, mimeType: string): void
   document.body.appendChild(link);
   link.click();
   link.remove();
-  URL.revokeObjectURL(url);
+  // Revoke later so the browser can start the download first.
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function today(): string {
