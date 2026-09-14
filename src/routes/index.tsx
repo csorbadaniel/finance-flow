@@ -13,6 +13,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Log income and expenses in seconds, then see exactly where your money goes." },
       { property: "og:title", content: "FinanceFlow — Personal finance tracker" },
       { property: "og:description", content: "Log income and expenses in seconds, then see exactly where your money goes." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: HomePage,
@@ -24,6 +26,10 @@ function HomePage() {
   return (
     <AppShell title="Home">
       <div className="space-y-4">
+        <div className="pb-1">
+          <p className="text-xs font-medium text-muted-foreground">Your financial position</p>
+          <p className="mt-1 text-lg font-semibold">Overview</p>
+        </div>
         <MonthSummaryCard transactions={state.transactions} />
         <QuickAddDialog />
         <RecentTransactions state={state} />

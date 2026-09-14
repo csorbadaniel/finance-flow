@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { appearanceStore } from "@/lib/appearance";
 
 function NotFoundComponent() {
   return (
@@ -78,14 +79,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "FinanceFlow" },
+      { name: "description", content: "A precise personal finance tracker for income, expenses and balances." },
+      { name: "author", content: "FinanceFlow" },
+      { property: "og:title", content: "FinanceFlow" },
+      { property: "og:description", content: "A precise personal finance tracker for income, expenses and balances." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -116,6 +116,10 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    appearanceStore.apply(appearanceStore.getSnapshot());
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

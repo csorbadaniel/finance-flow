@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { AppShell } from "@/components/layout/AppShell";
+import { AppearancePreference } from "@/components/settings/AppearancePreference";
 import { CurrencyPreference } from "@/components/settings/CurrencyPreference";
 import { DataTransfer } from "@/components/settings/DataTransfer";
 import { OnboardingRestart } from "@/components/settings/OnboardingRestart";
@@ -28,7 +29,10 @@ function SettingsPage() {
             <CardTitle className="text-base">Preferences</CardTitle>
           </CardHeader>
           <CardContent>
-            <CurrencyPreference />
+            <div className="space-y-5">
+              <AppearancePreference />
+              <CurrencyPreference />
+            </div>
           </CardContent>
         </Card>
 

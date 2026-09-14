@@ -17,10 +17,10 @@ export function RecentTransactions({ state, limit = 5 }: RecentTransactionsProps
     .slice(0, limit);
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-base">Recent records</CardTitle>
-        <Link to="/records" className="text-sm font-medium text-primary hover:underline">
+    <Card className="overflow-hidden">
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 border-b border-border px-5 py-4">
+        <CardTitle className="text-sm uppercase tracking-[0.12em] text-muted-foreground">Recent records</CardTitle>
+        <Link to="/records" className="text-xs font-semibold text-primary hover:underline">
           See all
         </Link>
       </CardHeader>
@@ -35,7 +35,7 @@ export function RecentTransactions({ state, limit = 5 }: RecentTransactionsProps
               const path = getCategoryPath(state, txn.categoryId);
               const leaf = path[path.length - 1];
               return (
-                <li key={txn.id} className="flex items-center justify-between gap-3 px-4 py-3">
+                <li key={txn.id} className="flex items-center justify-between gap-3 px-5 py-3.5 transition-colors hover:bg-muted/40">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{leaf?.name ?? "Uncategorized"}</p>
                     <p className="truncate text-xs text-muted-foreground">
