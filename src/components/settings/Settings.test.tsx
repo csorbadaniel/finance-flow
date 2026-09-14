@@ -3,10 +3,12 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { CurrencyPreference } from "./CurrencyPreference";
+import { AppearancePreference } from "./AppearancePreference";
 import { OnboardingRestart } from "./OnboardingRestart";
 import { MonthSummaryCard } from "@/components/home/MonthSummaryCard";
 import { financeStore } from "@/lib/finance/store";
 import { formatMoney } from "@/lib/finance/currency";
+import { appearanceStore } from "@/lib/appearance";
 
 const navigate = vi.fn();
 vi.mock("@tanstack/react-router", () => ({
@@ -40,6 +42,25 @@ describe("currency preference", () => {
     financeStore.setCurrency("EUR");
     const { container } = render(<MonthSummaryCard transactions={[]} />);
     expect(container.textContent).toContain("€");
+  });
+});
+
+describe("appearance preference", () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+    document.documentElement.classList.remove("dark");
+    appearanceStore.reset();
+  });
+
+  it("defaults to dark and persists a light selection", async () => {
+    const user = userEvent.setup();
+    render(<AppearancePreference />);
+
+    expect(document.documentElement).toHaveClass("dark");
+    await user.click(screen.getByRole("button", { name: "Light" }));
+
+    expect(document.documentElement).not.toHaveClass("dark");
+    expect(window.localStorage.getItem("financeflow-appearance")).toBe("light");
   });
 });
 
