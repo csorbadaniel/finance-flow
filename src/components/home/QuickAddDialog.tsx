@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Plus } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -92,6 +93,7 @@ export function QuickAddDialog() {
     >
       <DialogTrigger asChild>
         <Button size="lg" className="w-full">
+          <Plus aria-hidden="true" />
           Add record
         </Button>
       </DialogTrigger>

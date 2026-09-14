@@ -41,9 +41,9 @@ interface NavDrawerProps {
 export function NavDrawer({ isOpen, onOpenChange }: NavDrawerProps) {
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent side="left" className="w-72 p-0">
-        <SheetHeader className="border-b border-border px-5 py-4">
-          <SheetTitle className="text-lg tracking-tight">FinanceFlow</SheetTitle>
+      <SheetContent side="left" className="w-72 border-r border-sidebar-border bg-sidebar p-0">
+        <SheetHeader className="border-b border-sidebar-border px-5 py-5">
+          <SheetTitle className="text-lg font-semibold">FinanceFlow<span className="text-primary">.</span></SheetTitle>
           <SheetDescription className="text-xs">
             Track income, expenses and purses
           </SheetDescription>
@@ -56,7 +56,7 @@ export function NavDrawer({ isOpen, onOpenChange }: NavDrawerProps) {
                   to={item.to}
                   onClick={() => onOpenChange(false)}
                   activeOptions={{ exact: item.to === "/" }}
-                  className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-accent data-[status=active]:bg-primary/10 data-[status=active]:text-primary"
+                  className="flex items-center gap-3 rounded-md border border-transparent px-3 py-2.5 text-sm font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent data-[status=active]:border-primary/25 data-[status=active]:bg-primary/10 data-[status=active]:text-primary"
                 >
                   <item.icon className="size-4 shrink-0" aria-hidden="true" />
                   {item.label}
