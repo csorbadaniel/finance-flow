@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      backups: {
+        Row: {
+          category_count: number
+          created_at: string
+          currency: string
+          device_label: string | null
+          format_version: number
+          id: string
+          payload: Json
+          purse_count: number
+          record_count: number
+          size_bytes: number
+          user_id: string
+        }
+        Insert: {
+          category_count?: number
+          created_at?: string
+          currency?: string
+          device_label?: string | null
+          format_version?: number
+          id?: string
+          payload: Json
+          purse_count?: number
+          record_count?: number
+          size_bytes?: number
+          user_id?: string
+        }
+        Update: {
+          category_count?: number
+          created_at?: string
+          currency?: string
+          device_label?: string | null
+          format_version?: number
+          id?: string
+          payload?: Json
+          purse_count?: number
+          record_count?: number
+          size_bytes?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
