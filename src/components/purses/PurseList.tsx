@@ -59,7 +59,7 @@ export function PurseList({ state, onEdit }: PurseListProps) {
               <p className="truncate text-sm font-medium">
                 {purse.name}
                 {purse.isDefault ? (
-                  <span className="ml-2 rounded bg-primary/10 px-1.5 py-0.5 text-xs text-primary">
+                  <span className="ml-2 rounded-sm border border-primary/25 bg-primary/10 px-1.5 py-0.5 text-xs font-medium text-primary">
                     Default
                   </span>
                 ) : null}

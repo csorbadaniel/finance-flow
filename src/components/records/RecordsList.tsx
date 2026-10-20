@@ -18,7 +18,7 @@ export function RecordsList({ state, transactions, onSelectTransaction }: Record
   const money = useMoneyFormatter();
   if (transactions.length === 0) {
     return (
-      <p className="rounded-xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
+      <p className="rounded-md border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
         No records match your filters.
       </p>
     );
@@ -41,7 +41,7 @@ export function RecordsList({ state, transactions, onSelectTransaction }: Record
               </span>
             </header>
 
-            <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-card">
+            <ul className="divide-y divide-border overflow-hidden rounded-md border border-border bg-card shadow-sm">
               {group.items.map((txn) => {
                 const path = getCategoryPath(state, txn.categoryId);
                 const purse = state.purses.find((p) => p.id === txn.purseId);

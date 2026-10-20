@@ -40,7 +40,7 @@ export function ChartWizard({ onComplete, initialConfig }: ChartWizardProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm font-medium text-muted-foreground">
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
         Step {step} of {totalSteps}
       </p>
 
