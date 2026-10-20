@@ -30,7 +30,7 @@ export function RecordFilters({ state, filters, onChange }: RecordFiltersProps) 
   const update = (patch: Partial<TransactionFilters>) => onChange({ ...filters, ...patch });
 
   return (
-    <section aria-label="Record filters" className="space-y-3 rounded-xl border border-border bg-card p-4">
+    <section aria-label="Record filters" className="space-y-3 rounded-md border border-border bg-card p-4 shadow-sm">
       <div className="space-y-1.5">
         <Label htmlFor="records-search">Search</Label>
         <Input
