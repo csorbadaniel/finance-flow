@@ -10,6 +10,8 @@ export const Route = createFileRoute("/signup")({
       { name: "description", content: "Create a FinanceFlow account and start tracking income, expenses and purses." },
       { property: "og:title", content: "Create account — FinanceFlow" },
       { property: "og:description", content: "Create a FinanceFlow account and start tracking income, expenses and purses." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: SignUpPage,

@@ -10,7 +10,7 @@ export const listBackups = createServerFn({ method: "GET" })
 export const uploadBackup = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => uploadBackupSchema.parse(input))
-  .handler(async ({ data, context }) => uploadBackupParcel(context, data));
+  .handler(async ({ data, context }) => uploadBackupParcel(context, { payload: data.payload, deviceLabel: data.deviceLabel }));
 
 export const getBackup = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])

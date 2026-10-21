@@ -10,6 +10,8 @@ export const Route = createFileRoute("/signin")({
       { name: "description", content: "Sign in to FinanceFlow to track your income, expenses and purses." },
       { property: "og:title", content: "Sign in — FinanceFlow" },
       { property: "og:description", content: "Sign in to FinanceFlow to track your income, expenses and purses." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: SignInPage,

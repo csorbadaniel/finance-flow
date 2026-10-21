@@ -16,6 +16,8 @@ export const Route = createFileRoute("/purses")({
       { name: "description", content: "Manage the wallets and accounts your records belong to." },
       { property: "og:title", content: "Purses — FinanceFlow" },
       { property: "og:description", content: "Manage the wallets and accounts your records belong to." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: PursesPage,

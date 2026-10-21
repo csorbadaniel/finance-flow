@@ -21,6 +21,8 @@ export const Route = createFileRoute("/records")({
       { name: "description", content: "Browse, filter and edit your logged income and expense records." },
       { property: "og:title", content: "Records — FinanceFlow" },
       { property: "og:description", content: "Browse, filter and edit your logged income and expense records." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: RecordsPage,

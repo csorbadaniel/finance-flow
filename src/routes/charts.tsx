@@ -16,6 +16,8 @@ export const Route = createFileRoute("/charts")({
       { name: "description", content: "Visualize where your money goes with guided category charts." },
       { property: "og:title", content: "Charts — FinanceFlow" },
       { property: "og:description", content: "Visualize where your money goes with guided category charts." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ChartsPage,
