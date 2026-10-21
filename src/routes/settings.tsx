@@ -15,6 +15,8 @@ export const Route = createFileRoute("/settings")({
       { name: "description", content: "App preferences, tutorial restart and version information." },
       { property: "og:title", content: "Settings — FinanceFlow" },
       { property: "og:description", content: "App preferences, tutorial restart and version information." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: SettingsPage,

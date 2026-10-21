@@ -19,6 +19,8 @@ export const Route = createFileRoute("/categories")({
       { name: "description", content: "Organize spending with a three-level category tree." },
       { property: "og:title", content: "Categories — FinanceFlow" },
       { property: "og:description", content: "Organize spending with a three-level category tree." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: CategoriesPage,
