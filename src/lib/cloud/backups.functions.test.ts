@@ -165,6 +165,6 @@ describe("cloud backup clerk", () => {
       get: () => getBackup({ data: { id: backupId } }), delete: () => deleteBackup({ data: { id: backupId } }),
     };
     await expect(calls[action]()).rejects.toThrow(/try again/i);
-    expect(JSON.stringify(console.info.mock?.calls ?? [])).not.toContain("Monthly salary");
+    expect(JSON.stringify(vi.mocked(console.info).mock.calls)).not.toContain("Monthly salary");
   });
 });
