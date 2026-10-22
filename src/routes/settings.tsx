@@ -87,7 +87,7 @@ function SettingsPage() {
               </div>
             </dl>
             <p className="mt-3 text-xs text-muted-foreground">
-              Your data is stored on this device only.
+              Your data is stored on this device. Cloud backups are only made when you press "Back up now".
             </p>
           </CardContent>
         </Card>
