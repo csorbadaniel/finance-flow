@@ -49,6 +49,16 @@ function SettingsPage() {
 
         <Card>
           <CardHeader className="pb-2">
+            <CardTitle className="text-base">Cloud backup</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CloudBackup />
+          </CardContent>
+        </Card>
+
+
+        <Card>
+          <CardHeader className="pb-2">
             <CardTitle className="text-base">Getting started</CardTitle>
           </CardHeader>
           <CardContent>
