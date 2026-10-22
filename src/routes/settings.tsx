@@ -4,6 +4,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { AppearancePreference } from "@/components/settings/AppearancePreference";
 import { CurrencyPreference } from "@/components/settings/CurrencyPreference";
 import { DataTransfer } from "@/components/settings/DataTransfer";
+import { CloudBackup } from "@/components/settings/CloudBackup";
 import { OnboardingRestart } from "@/components/settings/OnboardingRestart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { APP_BUILD_DATE, APP_NAME, APP_VERSION } from "@/lib/appInfo";
