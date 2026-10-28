@@ -4,4 +4,4 @@
 - [x] Block 2: authenticated backup clerk and validation tests; 93 tests pass, signed-in upload/list/get/delete and signed-out rejection verified.
 - [x] Block 3: backup hooks; 7 tests.
 - [x] Block 4: Cloud backup card in Settings; 107 tests pass.
-- [ ] Block 5: signed-in upload, restore and delete checks — requires Block 4.
+- [x] Block 5: guest check plus signed-in upload, restore on cleared device and delete verified in the preview.
