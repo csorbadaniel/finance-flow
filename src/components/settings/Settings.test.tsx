@@ -1,3 +1,4 @@
+import { resetFinanceStore } from "@/test/resetFinanceStore";
 import { describe, expect, it, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -18,7 +19,7 @@ vi.mock("@tanstack/react-router", () => ({
 describe("currency preference", () => {
   beforeEach(() => {
     window.localStorage.clear();
-    financeStore.resetToMock();
+    resetFinanceStore();
     navigate.mockClear();
   });
 
@@ -67,7 +68,7 @@ describe("appearance preference", () => {
 describe("onboarding restart", () => {
   beforeEach(() => {
     window.localStorage.clear();
-    financeStore.resetToMock();
+    resetFinanceStore();
     navigate.mockClear();
   });
 

@@ -1,3 +1,4 @@
+import { resetFinanceStore } from "@/test/resetFinanceStore";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -73,7 +74,7 @@ describe("Chart data helpers", () => {
 
 describe("Chart wizard", () => {
   beforeEach(() => {
-    financeStore.resetToMock();
+    resetFinanceStore();
   });
 
   it("walks through the three steps and reports the choices", async () => {

@@ -1,3 +1,4 @@
+import { resetFinanceStore } from "@/test/resetFinanceStore";
 import { beforeEach, describe, expect, it } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -13,7 +14,7 @@ function renderList() {
 
 describe("Purse manager", () => {
   beforeEach(() => {
-    financeStore.resetToMock();
+    resetFinanceStore();
   });
 
   it("lists every purse and marks the default one", () => {

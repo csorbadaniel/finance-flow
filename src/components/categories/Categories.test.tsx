@@ -1,3 +1,4 @@
+import { resetFinanceStore } from "@/test/resetFinanceStore";
 import { describe, expect, it, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -8,7 +9,7 @@ import { financeStore } from "@/lib/finance/store";
 
 describe("CategoryTree", () => {
   beforeEach(() => {
-    financeStore.resetToMock();
+    resetFinanceStore();
   });
 
   it("renders top-level categories", () => {
@@ -52,7 +53,7 @@ describe("CategoryTree", () => {
 
 describe("CategoryEditDialog", () => {
   beforeEach(() => {
-    financeStore.resetToMock();
+    resetFinanceStore();
   });
 
   it("adds a new top-level category", async () => {

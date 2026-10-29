@@ -1,3 +1,4 @@
+import { resetFinanceStore } from "@/test/resetFinanceStore";
 import { describe, expect, it, beforeEach, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
@@ -19,7 +20,7 @@ function normalize(value: string): string {
 
 describe("Home widgets", () => {
   beforeEach(() => {
-    financeStore.resetToMock();
+    resetFinanceStore();
   });
 
   it("shows the monthly balance, income and expense", () => {
