@@ -334,13 +334,6 @@ class FinanceStore {
       currency: data.currency ?? this.state.currency,
     });
   }
-
-  // ---- Test / reset -----------------------------------------------------
-
-  /** TEST ONLY: reset to mock initial state. */
-  resetToMock(): void {
-    this.commit(initialFinanceState);
-  }
 }
 
 export const financeStore = new FinanceStore();

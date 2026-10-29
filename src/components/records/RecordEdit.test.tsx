@@ -1,3 +1,4 @@
+import { resetFinanceStore } from "@/test/resetFinanceStore";
 import { describe, expect, it, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -7,7 +8,7 @@ import { financeStore } from "@/lib/finance/store";
 
 describe("RecordEditDialog", () => {
   beforeEach(() => {
-    financeStore.resetToMock();
+    resetFinanceStore();
   });
 
   it("prefills the form with the selected record", () => {

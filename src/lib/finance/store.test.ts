@@ -1,10 +1,11 @@
+import { resetFinanceStore } from "@/test/resetFinanceStore";
 import { describe, it, expect, beforeEach } from "vitest";
 import { financeStore } from "./store";
 import { formatMoney } from "./currency";
 import { getMonthSummary, getCategoryPath, getCategorySubtreeIds } from "./selectors";
 
 beforeEach(() => {
-  financeStore.resetToMock();
+  resetFinanceStore();
 });
 
 describe("financeStore — transactions", () => {
@@ -102,7 +103,7 @@ describe("financeStore — purses", () => {
 
 describe("selectors", () => {
   it("computes month summary from current-month transactions only", () => {
-    financeStore.resetToMock();
+    resetFinanceStore();
     const { income, expense, balance } = getMonthSummary(financeStore.getState().transactions);
     expect(balance).toBe(income - expense);
   });
