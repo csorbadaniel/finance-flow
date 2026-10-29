@@ -33,12 +33,22 @@ function loadState(): FinanceState {
   }
 }
 
+/** Thrown when device storage rejects a write; the change is not kept. */
+export class DeviceSaveError extends Error {
+  constructor(cause?: unknown) {
+    super("Couldn't save on this device, so your change wasn't kept. Free up browser storage or export a backup in Settings, then try again.");
+    this.name = "DeviceSaveError";
+    this.cause = cause;
+  }
+}
+
 function saveState(state: FinanceState): void {
   if (!isBrowser()) return;
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    // quota or serialization failure — silent in MVP
+  } catch (cause) {
+    console.error("[finance-store] device save failed", { error: cause instanceof Error ? cause.name : String(cause) });
+    throw new DeviceSaveError(cause);
   }
 }
 
@@ -64,8 +74,9 @@ class FinanceStore {
   }
 
   private commit(next: FinanceState): void {
-    this.state = next;
+    // Persist first: if the device refuses, keep the previous state so the screen never shows unsaved data.
     saveState(next);
+    this.state = next;
     this.listeners.forEach((l) => l());
   }
 

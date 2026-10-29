@@ -89,9 +89,13 @@ export function RecordEditDialog({ state, transaction, onClose }: RecordEditDial
   };
 
   const handleDelete = () => {
-    financeStore.deleteTransaction(transaction.id);
-    toast.success("Record deleted");
-    onClose();
+    try {
+      financeStore.deleteTransaction(transaction.id);
+      toast.success("Record deleted");
+      onClose();
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Could not delete the record.");
+    }
   };
 
   return (
