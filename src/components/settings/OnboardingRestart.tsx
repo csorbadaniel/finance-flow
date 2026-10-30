@@ -10,7 +10,12 @@ export function OnboardingRestart() {
   const navigate = useNavigate();
 
   const handleRestart = () => {
-    financeStore.setOnboardingSeen(false);
+    try {
+      financeStore.setOnboardingSeen(false);
+    } catch (cause) {
+      toast.error(cause instanceof Error ? cause.message : "Could not restart the tutorial.");
+      return;
+    }
     toast.success("Tutorial restarted");
     void navigate({ to: "/" });
   };

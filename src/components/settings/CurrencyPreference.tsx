@@ -19,8 +19,12 @@ export function CurrencyPreference() {
 
   const handleChange = (value: string) => {
     const code = value as CurrencyCode;
-    financeStore.setCurrency(code);
-    toast.success(`Currency set to ${code}`);
+    try {
+      financeStore.setCurrency(code);
+      toast.success(`Currency set to ${code}`);
+    } catch (cause) {
+      toast.error(cause instanceof Error ? cause.message : "Could not change the currency.");
+    }
   };
 
   return (
