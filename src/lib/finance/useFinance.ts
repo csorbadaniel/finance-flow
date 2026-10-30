@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { financeStore } from "./store";
-import { initialFinanceState } from "./mockData";
+import { initialFinanceState } from "./initialState";
 import type { FinanceState } from "./types";
 import { formatMoney, getCurrencySymbol } from "./currency";
 

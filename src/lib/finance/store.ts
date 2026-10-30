@@ -5,7 +5,7 @@
  * - Subscribers are notified on every mutation; React binding lives in `useFinance.ts`.
  * - All mutations are synchronous and validated; throws on invariant violations.
  */
-import { initialFinanceState } from "./mockData";
+import { initialFinanceState } from "./initialState";
 import { DEFAULT_CURRENCY, type CurrencyCode } from "./currency";
 import type { Category, FinanceState, Purse, Transaction, TransactionType } from "./types";
 
