@@ -6,6 +6,7 @@ import { CurrencyPreference } from "@/components/settings/CurrencyPreference";
 import { DataTransfer } from "@/components/settings/DataTransfer";
 import { CloudBackup } from "@/components/settings/CloudBackup";
 import { OnboardingRestart } from "@/components/settings/OnboardingRestart";
+import { DemoData } from "@/components/settings/DemoData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { APP_BUILD_DATE, APP_NAME, APP_VERSION } from "@/lib/appInfo";
 
@@ -63,7 +64,10 @@ function SettingsPage() {
             <CardTitle className="text-base">Getting started</CardTitle>
           </CardHeader>
           <CardContent>
-            <OnboardingRestart />
+            <div className="space-y-3">
+              <OnboardingRestart />
+              <DemoData />
+            </div>
           </CardContent>
         </Card>
 

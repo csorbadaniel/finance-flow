@@ -1,5 +1,5 @@
 import { financeStore } from "@/lib/finance/store";
-import { initialFinanceState } from "@/lib/finance/mockData";
+import { initialFinanceState } from "@/test/fixtures/finance";
 
 /** Test helper: restores the finance store to the mock starting data. */
 export function resetFinanceStore(): void {
