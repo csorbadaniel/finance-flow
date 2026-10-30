@@ -22,8 +22,12 @@ export function PurseList({ state, onEdit }: PurseListProps) {
   const money = useMoneyFormatter();
   const handleSetDefault = (purse: Purse) => {
     if (purse.isDefault) return;
-    financeStore.setDefaultPurse(purse.id);
-    toast.success(`${purse.name} is now the default purse`);
+    try {
+      financeStore.setDefaultPurse(purse.id);
+      toast.success(`${purse.name} is now the default purse`);
+    } catch (cause) {
+      toast.error(cause instanceof Error ? cause.message : "Could not change the default purse.");
+    }
   };
 
   if (state.purses.length === 0) {
