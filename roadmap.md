@@ -7,5 +7,5 @@
 - [x] Block 5: guest check plus signed-in upload, restore on cleared device and delete verified in the preview.- [x] Cleanup: removed template leftovers, test-only store reset, 30 unused UI components and 24 packages.
 
 ## Starting data
-- [ ] Start new devices without sample transactions, preserve saved data, and move test fixtures out of production startup.
-- [ ] Add an explicit, non-destructive demo choice in Settings; test and verify it in the preview, then pause for approval.
+- [x] Start new devices without sample transactions, preserve saved data, and move test fixtures out of production startup.
+- [x] Add an explicit, non-destructive demo choice in Settings; 114 tests pass, fresh-device/cancel/load/reload verified in the preview; paused for approval.
