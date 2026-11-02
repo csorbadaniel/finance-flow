@@ -13,7 +13,7 @@ import {
 } from "@/lib/finance/charts";
 import type { Transaction } from "@/lib/finance/types";
 
-const now = new Date(2026, 8, 2); // 2026/09/02
+const now = new Date(2026, 8, 2); // 2026-09-02
 
 function txn(partial: Partial<Transaction>): Transaction {
   return {

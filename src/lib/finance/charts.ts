@@ -1,5 +1,6 @@
 import type { FinanceState, Transaction } from "./types";
 import { getCategoryPath, getMonthKey } from "./selectors";
+import { toIsoDate } from "@/lib/dates";
 
 export type ChartView = "expense" | "income" | "balance";
 export type ChartRange = "thisMonth" | "lastMonth" | "last3Months" | "thisYear" | "all";
@@ -37,11 +38,6 @@ export const chartFormatLabels: Record<ChartFormat, string> = {
   line: "Line chart",
 };
 
-function toIsoDate(date: Date): string {
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${date.getFullYear()}-${month}-${day}`;
-}
 
 export interface DateRangeBounds {
   /** Inclusive ISO start date, or null for an open start. */

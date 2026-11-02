@@ -5,6 +5,7 @@
  * - Subscribers are notified on every mutation; React binding lives in `useFinance.ts`.
  * - All mutations are synchronous and validated; throws on invariant violations.
  */
+import { getCategorySubtreeIds } from "./selectors";
 import { initialFinanceState } from "./initialState";
 import { DEFAULT_CURRENCY, type CurrencyCode } from "./currency";
 import type { Category, FinanceState, Purse, Transaction, TransactionType } from "./types";
@@ -196,12 +197,7 @@ class FinanceStore {
    */
   deleteCategory(id: string): void {
     this.ensureHydrated();
-    const toDelete = new Set<string>();
-    const collect = (cid: string) => {
-      toDelete.add(cid);
-      this.state.categories.filter((c) => c.parentId === cid).forEach((c) => collect(c.id));
-    };
-    collect(id);
+    const toDelete = getCategorySubtreeIds(this.state, id);
 
     const target = this.state.categories.find((c) => c.id === id);
     if (!target) throw new Error("Category not found");
@@ -239,13 +235,7 @@ class FinanceStore {
   /** Returns the set of category IDs that would be deleted with this node. */
   getCategoryDescendants(id: string): string[] {
     this.ensureHydrated();
-    const out: string[] = [];
-    const walk = (cid: string) => {
-      out.push(cid);
-      this.state.categories.filter((c) => c.parentId === cid).forEach((c) => walk(c.id));
-    };
-    walk(id);
-    return out;
+    return [...getCategorySubtreeIds(this.state, id)];
   }
 
   // ---- Purses -----------------------------------------------------------

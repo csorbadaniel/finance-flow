@@ -1,9 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database, Json, Tables } from "@/integrations/supabase/types";
+import type { Database, Json } from "@/integrations/supabase/types";
 import { BACKUP_VERSION, type BackupData } from "@/lib/finance/backup";
 import { MAX_CLOUD_BACKUPS, prepareCloudPayload, validateCloudPayload } from "./backupValidation";
 
-export type BackupSummary = Omit<Tables<"backups">, "payload" | "user_id">;
+import type { BackupSummary } from "./types";
+export type { BackupSummary };
 interface BackupContext { supabase: SupabaseClient<Database>; userId: string }
 const summaryColumns = "id,created_at,format_version,device_label,record_count,category_count,purse_count,currency,size_bytes";
 type Action = "list" | "upload" | "get" | "delete";

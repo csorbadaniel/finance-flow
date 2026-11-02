@@ -59,22 +59,11 @@ export function getDefaultPurseId(state: FinanceState): string | undefined {
   return (state.purses.find((p) => p.isDefault) ?? state.purses[0])?.id;
 }
 
-/** Formats an ISO date (YYYY-MM-DD) for display as YYYY/MM/DD. */
-export function formatDisplayDate(isoDate: string): string {
-  const d = new Date(isoDate);
-  const month = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}/${month}/${day}`;
-}
+export { formatDisplayDate, formatMonthKey } from "@/lib/dates";
 
 /** Returns the YYYY-MM month key of an ISO date. */
 export function getMonthKey(isoDate: string): string {
   return isoDate.slice(0, 7);
-}
-
-/** Formats a YYYY-MM key as a readable month label, e.g. "2026/08". */
-export function formatMonthKey(monthKey: string): string {
-  return monthKey.replace("-", "/");
 }
 
 export interface TransactionFilters {
