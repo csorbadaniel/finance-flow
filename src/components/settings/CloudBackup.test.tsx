@@ -53,7 +53,7 @@ describe("cloud backup card", () => {
     render(<CloudBackup />);
     const row = screen.getByRole("listitem");
     expect(within(row).getByText(/Laptop/)).toBeInTheDocument();
-    expect(within(row).getByText(/2026\/10\/21/)).toBeInTheDocument();
+    expect(within(row).getByText(/2026-10-21/)).toBeInTheDocument();
     expect(within(row).getByText(/36 records/)).toBeInTheDocument();
     expect(within(row).getByText(/12,5 KB/)).toBeInTheDocument();
   });
