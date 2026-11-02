@@ -23,23 +23,13 @@ import {
   useUploadBackup,
 } from "@/lib/cloud/useCloudBackups";
 
-interface BackupParcel {
-  id: string;
-  created_at: string;
-  device_label: string | null;
-  record_count: number;
-  size_bytes: number;
-}
+import type { BackupSummary as BackupParcel } from "@/lib/cloud/types";
+import { formatDateTime } from "@/lib/dates";
 
 type PendingAction = { kind: "restore" | "delete"; parcel: BackupParcel } | null;
 
-const pad = (value: number) => String(value).padStart(2, "0");
-
-/** Formats a timestamp as YYYY/MM/DD HH:mm in local time. */
-export function formatBackupDate(iso: string): string {
-  const date = new Date(iso);
-  return `${date.getFullYear()}/${pad(date.getMonth() + 1)}/${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-}
+/** Formats a backup timestamp as YYYY-MM-DD HH:mm in local time. */
+export const formatBackupDate = formatDateTime;
 
 /** Formats a size in KB/MB with a comma decimal separator. */
 export function formatBackupSize(bytes: number): string {
