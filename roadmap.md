@@ -9,3 +9,7 @@
 ## Starting data
 - [x] Start new devices without sample transactions, preserve saved data, and move test fixtures out of production startup.
 - [x] Add an explicit, non-destructive demo choice in Settings; 114 tests pass, fresh-device/cancel/load/reload verified in the preview; paused for approval.
+
+## DRY merges
+- [x] Shared date helpers (YYYY-MM-DD everywhere), one subcategory walker, shared backup summary type; 118 tests pass.
+- [ ] Next block (awaiting approval): one payload checker for file import and cloud, finance rules module, shared record form.
