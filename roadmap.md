@@ -13,3 +13,8 @@
 ## DRY merges
 - [x] Shared date helpers (YYYY-MM-DD everywhere), one subcategory walker, shared backup summary type; 118 tests pass.
 - [ ] Next block (awaiting approval): one payload checker for file import and cloud, finance rules module, shared record form.
+
+## Final polish
+- [ ] Standardize recoverable errors and add privacy-safe device mutation logging.
+- [ ] Extend failed-save and restore recovery tests, then verify in the preview.
+- [ ] Diagnose the reported hydration warning without masking real app errors.
