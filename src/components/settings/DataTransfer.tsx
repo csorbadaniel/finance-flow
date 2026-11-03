@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -72,7 +73,7 @@ export function DataTransfer() {
       financeStore.replaceData(parsed);
       toast.success(`Imported ${parsed.transactions.length} records`);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Import failed.");
+      toast.error(getErrorMessage(error, "Could not import data. Please try again."));
     } finally {
       setIsImporting(false);
       if (fileInputRef.current) fileInputRef.current.value = "";

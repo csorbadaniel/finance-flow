@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -65,7 +66,7 @@ export function CategoryEditDialog({ state, mode, onClose }: CategoryEditDialogP
       }
       onClose();
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Something went wrong");
+      setError(getErrorMessage(caught));
     }
   };
 
@@ -80,7 +81,7 @@ export function CategoryEditDialog({ state, mode, onClose }: CategoryEditDialogP
       toast.success("Category deleted");
       onClose();
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Something went wrong");
+      setError(getErrorMessage(caught));
     }
   };
 

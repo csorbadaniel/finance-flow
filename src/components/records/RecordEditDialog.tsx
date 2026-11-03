@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -84,7 +85,7 @@ export function RecordEditDialog({ state, transaction, onClose }: RecordEditDial
       toast.success("Record updated");
       onClose();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not save the record.");
+      setError(getErrorMessage(cause, "Could not save the record. Please try again."));
     }
   };
 
@@ -94,7 +95,7 @@ export function RecordEditDialog({ state, transaction, onClose }: RecordEditDial
       toast.success("Record deleted");
       onClose();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not delete the record.");
+      setError(getErrorMessage(cause, "Could not delete the record. Please try again."));
     }
   };
 
