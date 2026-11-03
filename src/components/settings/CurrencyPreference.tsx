@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { toast } from "sonner";
 
 import { Label } from "@/components/ui/label";
@@ -23,7 +24,7 @@ export function CurrencyPreference() {
       financeStore.setCurrency(code);
       toast.success(`Currency set to ${code}`);
     } catch (cause) {
-      toast.error(cause instanceof Error ? cause.message : "Could not change the currency.");
+      toast.error(getErrorMessage(cause, "Could not change the currency. Please try again."));
     }
   };
 

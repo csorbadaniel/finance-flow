@@ -21,4 +21,19 @@ describe("device save failures", () => {
     financeStore.addTransaction({ type: "expense", amount: 10, categoryId: categories[0].id, purseId: purses[0].id, date: "2026-10-29" });
     expect(financeStore.getState().transactions).toHaveLength(transactions.length + 1);
   });
+
+  it("does not notify subscribers or replace device data after a rejected import", () => {
+    resetFinanceStore();
+    const before = financeStore.getState();
+    const listener = vi.fn();
+    const unsubscribe = financeStore.subscribe(listener);
+    try {
+      vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => { throw new DOMException("full", "QuotaExceededError"); });
+      expect(() => financeStore.replaceData({ ...before, transactions: [] })).toThrow(DeviceSaveError);
+      expect(financeStore.getState()).toBe(before);
+      expect(listener).not.toHaveBeenCalled();
+    } finally {
+      unsubscribe();
+    }
+  });
 });

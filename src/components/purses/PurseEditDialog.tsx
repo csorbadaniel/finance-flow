@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -56,7 +57,7 @@ export function PurseEditDialog({ state, mode, onClose }: PurseEditDialogProps) 
       }
       onClose();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not save the purse.");
+      setError(getErrorMessage(cause, "Could not save the purse. Please try again."));
     }
   };
 
@@ -67,7 +68,7 @@ export function PurseEditDialog({ state, mode, onClose }: PurseEditDialogProps) 
       toast.success("Purse deleted");
       onClose();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not delete the purse.");
+      setError(getErrorMessage(cause, "Could not delete the purse. Please try again."));
     }
   };
 

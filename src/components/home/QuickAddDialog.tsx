@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
@@ -71,7 +72,7 @@ export function QuickAddDialog() {
       resetForm();
       setIsOpen(false);
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not save the record.");
+      setError(getErrorMessage(cause, "Could not save the record. Please try again."));
     }
   };
 

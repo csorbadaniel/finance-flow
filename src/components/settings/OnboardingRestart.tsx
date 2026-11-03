@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
@@ -13,7 +14,7 @@ export function OnboardingRestart() {
     try {
       financeStore.setOnboardingSeen(false);
     } catch (cause) {
-      toast.error(cause instanceof Error ? cause.message : "Could not restart the tutorial.");
+      toast.error(getErrorMessage(cause, "Could not restart the tutorial. Please try again."));
       return;
     }
     toast.success("Tutorial restarted");

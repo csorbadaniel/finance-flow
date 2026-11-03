@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
@@ -38,9 +39,6 @@ export function formatBackupSize(bytes: number): string {
   return bytes >= 1024 * 1024 ? `${format(bytes / (1024 * 1024))} MB` : `${format(bytes / 1024)} KB`;
 }
 
-const errorMessage = (error: unknown) =>
-  error instanceof Error ? error.message : "Something went wrong. Please try again.";
-
 /** Manual cloud snapshots for signed-in members; guests see a sign-in invitation. */
 export function CloudBackup() {
   const { isAuthenticated } = useAuth();
@@ -58,7 +56,7 @@ export function CloudBackup() {
       await upload.mutateAsync(deviceLabel.trim());
       toast.success("Backup saved to the cloud");
     } catch (error) {
-      toast.error(errorMessage(error));
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -75,7 +73,7 @@ export function CloudBackup() {
         toast.success("Backup deleted");
       }
     } catch (error) {
-      toast.error(errorMessage(error));
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -118,7 +116,7 @@ export function CloudBackup() {
 
       {isAuthenticated && backups.isError && (
         <div role="alert" className="flex items-center justify-between gap-2 rounded-md border border-destructive/40 p-2 text-sm">
-          <span>{errorMessage(backups.error)}</span>
+          <span>{getErrorMessage(backups.error)}</span>
           <Button variant="outline" size="sm" onClick={() => void backups.refetch()}>
             Retry
           </Button>

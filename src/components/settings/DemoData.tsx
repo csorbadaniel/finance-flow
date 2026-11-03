@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { useState } from "react";
 import { FlaskConical } from "lucide-react";
 import { toast } from "sonner";
@@ -19,7 +20,7 @@ export function DemoData() {
       const count = await loadDemoData();
       toast.success(`Added ${count} sample records`);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Couldn't load demo data. Please try again.");
+      toast.error(getErrorMessage(error, "Could not load demo data. Please try again."));
     }
   };
 

@@ -1,3 +1,4 @@
+import { getErrorMessage } from "@/lib/errors";
 import { Pencil, Star } from "lucide-react";
 import { toast } from "sonner";
 
@@ -26,7 +27,7 @@ export function PurseList({ state, onEdit }: PurseListProps) {
       financeStore.setDefaultPurse(purse.id);
       toast.success(`${purse.name} is now the default purse`);
     } catch (cause) {
-      toast.error(cause instanceof Error ? cause.message : "Could not change the default purse.");
+      toast.error(getErrorMessage(cause, "Could not change the default purse. Please try again."));
     }
   };
 

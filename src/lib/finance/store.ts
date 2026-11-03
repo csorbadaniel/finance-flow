@@ -5,6 +5,7 @@
  * - Subscribers are notified on every mutation; React binding lives in `useFinance.ts`.
  * - All mutations are synchronous and validated; throws on invariant violations.
  */
+import { logDeviceMutation, type DeviceMutationAction } from "./deviceLogger";
 import { getCategorySubtreeIds } from "./selectors";
 import { initialFinanceState } from "./initialState";
 import { DEFAULT_CURRENCY, type CurrencyCode } from "./currency";
@@ -48,7 +49,6 @@ function saveState(state: FinanceState): void {
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch (cause) {
-    console.error("[finance-store] device save failed", { error: cause instanceof Error ? cause.name : String(cause) });
     throw new DeviceSaveError(cause);
   }
 }
@@ -74,9 +74,15 @@ class FinanceStore {
     return () => this.listeners.delete(listener);
   }
 
-  private commit(next: FinanceState): void {
+  private commit(action: DeviceMutationAction, next: FinanceState): void {
     // Persist first: if the device refuses, keep the previous state so the screen never shows unsaved data.
-    saveState(next);
+    try {
+      saveState(next);
+    } catch (error) {
+      logDeviceMutation(action, "failure");
+      throw error;
+    }
+    logDeviceMutation(action, "success");
     this.state = next;
     this.listeners.forEach((l) => l());
   }
@@ -114,7 +120,7 @@ class FinanceStore {
       note: input.note?.trim() || undefined,
       createdAt: new Date().toISOString(),
     };
-    this.commit({
+    this.commit("add_record", {
       ...this.state,
       transactions: [txn, ...this.state.transactions],
     });
@@ -130,13 +136,13 @@ class FinanceStore {
     if (patch.note !== undefined) next.note = patch.note.trim() || undefined;
     const txns = [...this.state.transactions];
     txns[idx] = next;
-    this.commit({ ...this.state, transactions: txns });
+    this.commit("update_record", { ...this.state, transactions: txns });
     return next;
   }
 
   deleteTransaction(id: string): void {
     this.ensureHydrated();
-    this.commit({
+    this.commit("delete_record", {
       ...this.state,
       transactions: this.state.transactions.filter((t) => t.id !== id),
     });
@@ -162,7 +168,7 @@ class FinanceStore {
       parentId: input.parentId ?? null,
       level,
     };
-    this.commit({ ...this.state, categories: [...this.state.categories, cat] });
+    this.commit("add_category", { ...this.state, categories: [...this.state.categories, cat] });
     return cat;
   }
 
@@ -177,7 +183,7 @@ class FinanceStore {
     );
     if (duplicate) throw new Error("A category with this name already exists here");
     const next = { ...cat, name: trimmed };
-    this.commit({
+    this.commit("rename_category", {
       ...this.state,
       categories: this.state.categories.map((c) => (c.id === id ? next : c)),
     });
@@ -225,7 +231,7 @@ class FinanceStore {
       toDelete.has(t.categoryId) && reassignTo ? { ...t, categoryId: reassignTo } : t,
     );
 
-    this.commit({
+    this.commit("delete_category", {
       ...this.state,
       categories: nextCategories,
       transactions: nextTransactions,
@@ -252,7 +258,7 @@ class FinanceStore {
       name: trimmed,
       isDefault: this.state.purses.length === 0,
     };
-    this.commit({ ...this.state, purses: [...this.state.purses, purse] });
+    this.commit("add_purse", { ...this.state, purses: [...this.state.purses, purse] });
     return purse;
   }
 
@@ -266,7 +272,7 @@ class FinanceStore {
       throw new Error("A purse with this name already exists");
     }
     const next = { ...purse, name: trimmed };
-    this.commit({
+    this.commit("rename_purse", {
       ...this.state,
       purses: this.state.purses.map((p) => (p.id === id ? next : p)),
     });
@@ -276,7 +282,7 @@ class FinanceStore {
   setDefaultPurse(id: string): void {
     this.ensureHydrated();
     if (!this.state.purses.some((p) => p.id === id)) throw new Error("Purse not found");
-    this.commit({
+    this.commit("set_default_purse", {
       ...this.state,
       purses: this.state.purses.map((p) => ({ ...p, isDefault: p.id === id })),
     });
@@ -293,7 +299,7 @@ class FinanceStore {
     }
     // reassign transactions to fallback default
     const fallback = remaining.find((p) => p.isDefault) ?? remaining[0];
-    this.commit({
+    this.commit("delete_purse", {
       ...this.state,
       purses: remaining,
       transactions: this.state.transactions.map((t) =>
@@ -306,14 +312,14 @@ class FinanceStore {
 
   setOnboardingSeen(seen: boolean): void {
     this.ensureHydrated();
-    this.commit({ ...this.state, onboardingSeen: seen });
+    this.commit("set_onboarding", { ...this.state, onboardingSeen: seen });
   }
 
   // ---- Preferences ------------------------------------------------------
 
   setCurrency(currency: CurrencyCode): void {
     this.ensureHydrated();
-    this.commit({ ...this.state, currency });
+    this.commit("set_currency", { ...this.state, currency });
   }
 
   // ---- Import / export --------------------------------------------------
@@ -327,7 +333,7 @@ class FinanceStore {
   }): void {
     this.ensureHydrated();
     if (data.purses.length === 0) throw new Error("At least one purse is required");
-    this.commit({
+    this.commit("replace_data", {
       ...this.state,
       categories: data.categories,
       purses: data.purses,
