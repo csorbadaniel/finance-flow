@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
@@ -28,6 +28,7 @@ function wrapper() {
 }
 
 beforeEach(() => vi.clearAllMocks());
+afterEach(() => vi.restoreAllMocks());
 
 describe("cloud backup hooks", () => {
   it("does not reach the mailbox for walk-in guests", () => {
@@ -83,5 +84,14 @@ describe("cloud backup hooks", () => {
     const { result } = renderHook(() => useDeleteBackup(), { wrapper: wrapper() });
     await act(() => result.current.mutateAsync(summary.id));
     expect(mocks.deleteBackup).toHaveBeenCalledWith({ data: { id: summary.id } });
+  });
+
+  it("preserves device data when a fetched backup cannot be saved locally", async () => {
+    const before = financeStore.getState();
+    mocks.getBackup.mockResolvedValue({ backup: summary, payload: exampleBackup });
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => { throw new DOMException("full", "QuotaExceededError"); });
+    const { result } = renderHook(() => useRestoreBackup(), { wrapper: wrapper() });
+    await expect(act(() => result.current.mutateAsync(summary.id))).rejects.toThrow(/Couldn't save on this device/);
+    expect(financeStore.getState()).toBe(before);
   });
 });
