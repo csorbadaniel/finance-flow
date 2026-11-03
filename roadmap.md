@@ -15,6 +15,6 @@
 - [ ] Next block (awaiting approval): one payload checker for file import and cloud, finance rules module, shared record form.
 
 ## Final polish
-- [ ] Standardize recoverable errors and add privacy-safe device mutation logging.
-- [ ] Extend failed-save and restore recovery tests, then verify in the preview.
-- [ ] Diagnose the reported hydration warning without masking real app errors.
+- [x] Standardize recoverable errors and add privacy-safe device mutation logging.
+- [x] Extend failed-save and restore recovery tests; 125 tests pass. Preview confirmed failed add retains inputs, retry saves, and the record reads back after reload.
+- [x] Diagnose the reported hydration warning: the captured mismatch is an extension-injected `nighteye` HTML attribute. All eight pages load without hydration/runtime errors in a clean browser; no app warnings suppressed.
