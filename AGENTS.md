@@ -5,3 +5,5 @@
 - Cloud RPC wrappers delegate to server-only parcel helpers; a shared schema validates snapshots before writes and restores, and metadata is derived server-side. Why: malformed or caller-forged parcel labels must never become trusted finance data.
 - Keep production starting state separate from test fixtures; load optional sample records through a lazy demo module and merge them only into a record-free device, preserving categories, purses and preferences. Why: new users must never receive automatic demo transactions or lose personal data when trying the demo.
 - Log device mutation outcomes at the persistence boundary using action/event only, and share recoverable error-message handling at UI boundaries. Why: failed writes remain diagnosable without exposing financial data or losing actionable recovery instructions.
+
+- Chart filtering and daily/category aggregation live in the finance chart helpers; the chart screen coordinates explicit selections and the result renders them. Why: the date and drill-down rules remain testable independently from visualization.
