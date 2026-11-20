@@ -17,7 +17,11 @@ export function Calendar({
         root: "relative w-[280px]",
         months: "relative",
         month: "space-y-3",
-        month_caption: "flex h-9 items-center justify-center text-sm font-medium",
+        month_caption: "mx-10 flex h-9 items-center justify-center text-sm font-medium",
+        dropdowns: "flex items-center gap-2",
+        dropdown_root: "relative rounded-md px-1 focus-within:ring-1 focus-within:ring-ring",
+        dropdown: "absolute inset-0 z-10 w-full cursor-pointer opacity-0",
+        caption_label: "flex items-center gap-1 whitespace-nowrap",
         nav: "absolute inset-x-0 top-0 flex justify-between",
         button_previous: cn(buttonVariants({ variant: "outline", size: "icon" }), "size-8"),
         button_next: cn(buttonVariants({ variant: "outline", size: "icon" }), "size-8"),
@@ -38,8 +42,10 @@ export function Calendar({
         Chevron: ({ orientation }) =>
           orientation === "left" ? (
             <ChevronLeft className="size-4" />
-          ) : (
+          ) : orientation === "right" ? (
             <ChevronRight className="size-4" />
+          ) : (
+            <ChevronRight className="size-3 rotate-90" />
           ),
       }}
       {...props}

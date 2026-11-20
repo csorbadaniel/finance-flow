@@ -20,7 +20,7 @@
 - [x] Diagnose the reported hydration warning: the captured mismatch is an extension-injected `nighteye` HTML attribute. All eight pages load without hydration/runtime errors in a clean browser; no app warnings suppressed.
 
 ## Charts rework
-- [ ] Balance pie: show expense categories with net balance above, per user choice.
-- [ ] Replace wizard with explicit view selection, calendar dates, two-month range slider and 1/3/6-month shortcuts.
-- [ ] Add live daily bar charts and pie drill-down with synchronized category selectors.
-- [ ] Verify tests and desktop/mobile flow, then pause for page approval.
+- [x] Balance pie: show expense categories with net balance above, per user choice.
+- [x] Replace wizard with explicit view selection, calendar dates, two-month range slider and 1/3/6-month shortcuts.
+- [x] Add live daily bar charts and pie drill-down with synchronized category selectors.
+- [x] Verify tests and desktop/mobile flow, then pause for page approval.
