@@ -24,3 +24,4 @@
 - [x] Replace wizard with explicit view selection, calendar dates, two-month range slider and 1/3/6-month shortcuts.
 - [x] Add live daily bar charts and pie drill-down with synchronized category selectors.
 - [x] Verify tests and desktop/mobile flow, then pause for page approval.
+- [x] Charts flow approved by the user; 127 tests pass.
