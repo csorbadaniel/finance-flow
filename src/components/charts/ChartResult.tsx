@@ -1,6 +1,8 @@
+import { useState } from "react";
 import {
   Bar,
-  BarChart,
+  ComposedChart,
+  Line,
   CartesianGrid,
   Cell,
   Pie,
@@ -17,11 +19,13 @@ import {
   chartSlices,
   chartViewLabels,
   filterChartTransactions,
+  sortChronologically,
   type ChartConfig,
 } from "@/lib/finance/charts";
 import { sumByType } from "@/lib/finance/selectors";
 import { useMoneyFormatter } from "@/lib/finance/useFinance";
 import type { FinanceState } from "@/lib/finance/types";
+import { ChartRecordList } from "./ChartRecordList";
 interface Props {
   state: FinanceState;
   config: ChartConfig;
@@ -36,6 +40,7 @@ const colors = [
 ];
 export function ChartResult({ state, config, onCategoryChange }: Props) {
   const money = useMoneyFormatter();
+  const [showRunningTotal, setShowRunningTotal] = useState(false);
   const transactions = filterChartTransactions(state, config);
   const totals = sumByType(transactions);
   const isBalance = config.view === "balance";
@@ -108,7 +113,7 @@ export function ChartResult({ state, config, onCategoryChange }: Props) {
                   />
                 </PieChart>
               ) : (
-                <BarChart data={points} margin={{ top: 8, right: 8, left: 0, bottom: 22 }}>
+                <ComposedChart data={points} margin={{ top: 8, right: 8, left: 0, bottom: 22 }}>
                   <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" vertical={false} />
                   <XAxis
                     dataKey="date"
@@ -142,10 +147,32 @@ export function ChartResult({ state, config, onCategoryChange }: Props) {
                     maxBarSize={32}
                     radius={[2, 2, 0, 0]}
                   />
-                </BarChart>
+                  {isBalance && showRunningTotal && (
+                    <Line
+                      type="monotone"
+                      dataKey="cumulative"
+                      name="Running total"
+                      stroke="var(--foreground)"
+                      strokeWidth={2}
+                      dot={false}
+                      isAnimationActive={false}
+                    />
+                  )}
+                </ComposedChart>
               )}
             </ResponsiveContainer>
           </div>
+          {isBalance && config.format === "bar" && (
+            <label className="flex min-h-11 cursor-pointer items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                className="size-4 accent-primary"
+                checked={showRunningTotal}
+                onChange={(event) => setShowRunningTotal(event.target.checked)}
+              />
+              Show running total line
+            </label>
+          )}
           {config.format === "pie" && (
             <ul className="divide-y divide-border">
               {slices.map((slice, index) => (
@@ -171,6 +198,9 @@ export function ChartResult({ state, config, onCategoryChange }: Props) {
             </ul>
           )}
         </>
+      )}
+      {!isBalance && config.categoryId && (
+        <ChartRecordList state={state} transactions={sortChronologically(transactions)} />
       )}
     </section>
   );

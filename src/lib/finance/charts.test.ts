@@ -6,6 +6,7 @@ import {
   filterChartTransactions,
   previousMonths,
   recentSliderBounds,
+  sortChronologically,
 } from "./charts";
 import { initialFinanceState } from "./initialState";
 import type { Transaction } from "./types";
@@ -63,10 +64,30 @@ describe("Chart aggregation rules", () => {
         "2026-11-19",
       ),
     ).toEqual([
-      { date: "2026-11-17", income: 0, expense: 0, balance: 0 },
-      { date: "2026-11-18", income: 100, expense: 30, balance: 70 },
-      { date: "2026-11-19", income: 0, expense: 0, balance: 0 },
+      { date: "2026-11-17", income: 0, expense: 0, balance: 0, cumulative: 0 },
+      { date: "2026-11-18", income: 100, expense: 30, balance: 70, cumulative: 70 },
+      { date: "2026-11-19", income: 0, expense: 0, balance: 0, cumulative: 70 },
     ]);
+  });
+  it("keeps a running sum of daily balances across the period", () => {
+    const points = aggregateByDay(
+      [
+        transaction({ date: "2026-11-17", type: "income", amount: 100 }),
+        transaction({ date: "2026-11-18", amount: 40 }),
+        transaction({ date: "2026-11-19", amount: 80 }),
+      ],
+      "2026-11-17",
+      "2026-11-19",
+    );
+    expect(points.map((point) => point.cumulative)).toEqual([100, 60, -20]);
+  });
+  it("lists filtered records oldest first, tie-broken by creation time", () => {
+    const sorted = sortChronologically([
+      transaction({ id: "c", date: "2026-11-19" }),
+      transaction({ id: "b", date: "2026-11-17", createdAt: "2026-11-17T10:00:00Z" }),
+      transaction({ id: "a", date: "2026-11-17", createdAt: "2026-11-17T08:00:00Z" }),
+    ]);
+    expect(sorted.map((t) => t.id)).toEqual(["a", "b", "c"]);
   });
   it("drills from root to subcategory to leaf and retains direct parent records", () => {
     const transactions = [

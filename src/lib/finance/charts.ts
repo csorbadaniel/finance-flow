@@ -77,8 +77,10 @@ export interface DayPoint {
   income: number;
   expense: number;
   balance: number;
+  /** Running sum of daily balances from the period start. */
+  cumulative: number;
 }
-/** Daily net balance, not a running account balance. Missing days have zero amounts. */
+/** Daily net balance plus its running sum over the period. Missing days have zero amounts. */
 export function aggregateByDay(
   transactions: Transaction[],
   start: string,
@@ -87,7 +89,7 @@ export function aggregateByDay(
   const points = new Map<string, DayPoint>();
   for (let day = parseChartDate(start); toIsoDate(day) <= end; day = addDays(day, 1)) {
     const date = toIsoDate(day);
-    points.set(date, { date, income: 0, expense: 0, balance: 0 });
+    points.set(date, { date, income: 0, expense: 0, balance: 0, cumulative: 0 });
   }
   for (const transaction of transactions) {
     const point = points.get(transaction.date);
@@ -95,7 +97,19 @@ export function aggregateByDay(
     point[transaction.type] += transaction.amount;
     point.balance = point.income - point.expense;
   }
+  let runningTotal = 0;
+  for (const point of points.values()) {
+    runningTotal += point.balance;
+    point.cumulative = runningTotal;
+  }
   return [...points.values()];
+}
+
+/** Oldest first; same-day records keep the order they were created in. */
+export function sortChronologically(transactions: Transaction[]): Transaction[] {
+  return [...transactions].sort(
+    (a, b) => a.date.localeCompare(b.date) || a.createdAt.localeCompare(b.createdAt),
+  );
 }
 
 export function chartSlices(
